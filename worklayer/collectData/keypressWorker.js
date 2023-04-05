@@ -1,12 +1,4 @@
-const mongoose = require("mongoose");
-
-const KeyPress = mongoose.model("KeyPress", {
-  ip: String,
-  hostname: String,
-  protocol: String,
-  data: Object,
-  date: { type: Date, default: Date.now },
-});
+const KeyPress = require("../../model/keypressModel");
 
 const saveKeyPressEvents = (req, res) => {
   try {

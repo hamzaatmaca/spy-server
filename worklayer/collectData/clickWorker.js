@@ -1,12 +1,4 @@
-const mongoose = require("mongoose");
-
-const Click = mongoose.model("Click", {
-  ip: String,
-  hostname: String,
-  protocol: String,
-  data: Object,
-  date: { type: Date, default: Date.now },
-});
+const Click = require("../../model/clickModel");
 
 const saveClickEvents = (req, res) => {
   try {
