@@ -3,30 +3,30 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 exports.login = (req, res) => {
-  const loginUser = Register.findOne({ email: req.body.email });
-  console.log(loginUser);
+  const loginUser = Register.findOne({ email: req.body.email }).exec();
+
   if (loginUser) {
-    bcrypt
-      .compare(req.body.password, loginUser.password)
-      .then(function (result) {
+    loginUser.then((data) => {
+      bcrypt.compare(req.body.password, data.password).then(function (result) {
         if (result === false) {
           return res.status(401).json({ error: "Password Not Match" });
         } else {
           var token = jwt.sign(
             {
-              id: loginUser._id,
+              id: data._id,
               email: req.body.email,
-              name: loginUser.name,
-              surname: loginUser.surname,
-              country: loginUser.country,
-              city: loginUser.city,
-              phone: loginUser.phone,
-              hostname: loginUser.hostname,
+              name: data.name,
+              surname: data.surname,
+              country: data.country,
+              city: data.city,
+              phone: data.phone,
+              hostname: data.hostname,
             },
             process.env.SECRET
           );
           res.status(200).json({ data: token });
         }
       });
+    });
   }
 };

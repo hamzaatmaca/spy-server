@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Register = mongoose.model("Register", {
+const Register = new mongoose.Schema({
   name: String,
   surname: String,
   email: String,
@@ -10,7 +10,10 @@ const Register = mongoose.model("Register", {
   city: String,
   address: String,
   phone: String,
-  date: { type: Date, default: Date.now },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = Register;
+module.exports = mongoose.model("Register", Register);

@@ -13,26 +13,26 @@ exports.register = (req, res) => {
       return res.status(500).json({ data: "User Already Exists" });
     } else {
       let userObj = {
-        name: req.body.firstname,
-        surname: req.body.lastname,
+        name: req.body.name,
+        surname: req.body.surname,
         country: req.body.country,
         city: req.body.city,
         phone: req.body.phone,
         hostname: req.body.hostname,
         password: hash,
         email: req.body.email,
-        address: req.body.addres,
+        address: req.body.address,
       };
 
-      await RegisterSchema.create(userObj, function (err) {
-        if (err) {
+      await Register.create(userObj)
+        .then((user) => {
+          return res.status(201).json({
+            data: "User Created",
+          });
+        })
+        .catch((err) => {
           return res.status(500).json({ error: err });
-        }
-
-        return res.status(201).json({
-          data: "User Created",
         });
-      });
     }
   });
 };
