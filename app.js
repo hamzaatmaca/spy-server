@@ -30,6 +30,10 @@ const { getNlpData } = require("./worklayer/ai/nlpWorker");
 //PANEL WORKLAYER
 const { login } = require("./worklayer/panel/loginWoker");
 const { register } = require("./worklayer/panel/registerWorker");
+const {
+  visitors,
+  getVisitors,
+} = require("./worklayer/collectData/visitorWorker");
 
 //ENV FILE
 require("dotenv").config({});
@@ -81,7 +85,10 @@ app.post("/logapi/keypress", (req, res) => {
   saveKeyPressEvents(req, res);
 });
 
-//Panel Routes
+//Visitors Requests
+app.post("/logapi/visitors", visitors);
+
+//--------------- PANEL
 app.post("/logapi/login", (req, res) => {
   login(req, res);
 });
@@ -90,7 +97,11 @@ app.post("/logapi/register", (req, res) => {
   register(req, res);
 });
 
-//AI ROUTES
+app.get("/logapi/getvisitors", panelAuth, (req, res) => {
+  getVisitors(req, res);
+});
+
+//------------------ AI
 app.get("/logapi/getnlpdata", panelAuth, (req, res) => {
   getNlpData(req, res);
 });
