@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 exports.login = (req, res) => {
   const loginUser = Register.findOne({ email: req.body.email }).exec();
 
-  if (loginUser) {
-    loginUser.then((data) => {
+  loginUser.then((data) => {
+    if (data) {
       bcrypt.compare(req.body.password, data.password).then(function (result) {
         if (result === false) {
           return res.status(401).json({ error: "Password Not Match" });
@@ -27,6 +27,11 @@ exports.login = (req, res) => {
           res.status(200).json({ data: token });
         }
       });
-    });
-  }
+    } else {
+      res.status(401).json({
+        message: "Unauthorized",
+        data: "Kullanıcı adı yada şifre geçersiz",
+      });
+    }
+  });
 };

@@ -1,11 +1,13 @@
 const Click = require("../../model/clickModel");
 const Keypress = require("../../model/keypressModel");
 const Submit = require("../../model/submitModel");
+const jwt = require("jsonwebtoken");
 
 exports.getNlpData = (req, res) => {
-  const clickData = Click.find().exec();
-  const keypressData = Keypress.find().exec();
-  const submitData = Submit.find().exec();
+  const decoded = jwt.verify(req.headers.authorization, process.env.SECRET);
+  const clickData = Click.find({ hostname: decoded.hostname }).exec();
+  const keypressData = Keypress.find({ hostname: decoded.hostname }).exec();
+  const submitData = Submit.find({ hostname: decoded.hostname }).exec();
 
   Promise.all([clickData, keypressData, submitData])
     .then((val) => {

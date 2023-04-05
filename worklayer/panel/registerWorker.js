@@ -1,4 +1,5 @@
 const Register = require("../../model/registerModel");
+const Customer = require("../../model/customerModel");
 const bcrypt = require("bcrypt");
 
 exports.register = (req, res) => {
@@ -25,7 +26,11 @@ exports.register = (req, res) => {
       };
 
       await Register.create(userObj)
-        .then((user) => {
+        .then(async (user) => {
+          await Customer.create({
+            customer: req.body.hostname,
+          });
+
           return res.status(201).json({
             data: "User Created",
           });

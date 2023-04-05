@@ -25,7 +25,7 @@ const {
 } = require("./worklayer/collectData/keypressWorker");
 
 //AI WORKLAYER
-const { getNlpData } = require("./worklayer/ai/nlp");
+const { getNlpData } = require("./worklayer/ai/nlpWorker");
 
 //PANEL WORKLAYER
 const { login } = require("./worklayer/panel/loginWoker");
@@ -91,7 +91,7 @@ app.post("/logapi/register", (req, res) => {
 });
 
 //AI ROUTES
-app.get("/logapi/getnlpdata", (req, res) => {
+app.get("/logapi/getnlpdata", panelAuth, (req, res) => {
   getNlpData(req, res);
 });
 
