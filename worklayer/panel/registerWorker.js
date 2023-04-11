@@ -3,6 +3,7 @@ const Customer = require("../../model/customerModel");
 const bcrypt = require("bcrypt");
 
 exports.register = (req, res) => {
+  console.log(req.body);
   bcrypt.hash(req.body.password, 10, async function (err, hash) {
     if (err) return res.status(500).json({ error: "Password Not Salted" });
 

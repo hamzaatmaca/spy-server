@@ -60,7 +60,7 @@ if (cluster.isMaster) {
   });
 } else { */
 //Set Customers to Redis
-customers();
+/* customers(); */
 
 //Auth Mıddleware
 app.use(auth);
