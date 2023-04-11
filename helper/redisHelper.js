@@ -7,7 +7,7 @@ class RedisHelper {
       console.log(error);
     });
 
-    client.connect();
+    /* client.connect(); */
   }
 
   setRedis(key, value) {

@@ -1,7 +1,8 @@
 const redisHelper = require("../helper/redisHelper");
 
 const auth = (req, res, next) => {
-  redisHelper.getRedis("customers").then((param) => {
+  next();
+  /* redisHelper.getRedis("customers").then((param) => {
     if (req.hostname) {
       const customers = JSON.parse(param);
 
@@ -19,7 +20,7 @@ const auth = (req, res, next) => {
         message: "Host is invalid",
       });
     }
-  });
+  }); */
 };
 
 module.exports = auth;
